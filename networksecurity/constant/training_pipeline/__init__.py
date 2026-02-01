@@ -50,6 +50,7 @@ DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR: str = "transformed"
 DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR: str = "transformed_object"
 
 ## kkn imputer to replace nan values
+## if val is missing then it will consider nearest 3 neighbors avg to impute the missing value
 DATA_TRANSFORMATION_IMPUTER_PARAMS: dict = {
     "missing_values": np.nan,
     "n_neighbors": 3,
@@ -61,7 +62,7 @@ DATA_TRANSFORMATION_TEST_FILE_PATH: str = "test.npy"
 
 
 """
-Model Trainer ralated constant start with MODE TRAINER VAR NAME
+Model Trainer ralated constant start with MODEL TRAINER VAR NAME
 """
 
 MODEL_TRAINER_DIR_NAME: str = "model_trainer"
