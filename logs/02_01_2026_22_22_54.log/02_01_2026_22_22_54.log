@@ -1,6 +1,0 @@
-[ 2026-02-01 22:23:02,163 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
-[ 2026-02-01 22:23:02,178 ] 107 dagshub - INFO - Accessing as vedantukale29
-[ 2026-02-01 22:23:03,422 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/vedantukale29/Network-Security-Data-Science-Project "HTTP/1.1 200 OK"
-[ 2026-02-01 22:23:04,397 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
-[ 2026-02-01 22:23:04,397 ] 107 dagshub - INFO - Initialized MLflow to track repo "vedantukale29/Network-Security-Data-Science-Project"
-[ 2026-02-01 22:23:04,397 ] 107 dagshub - INFO - Repository vedantukale29/Network-Security-Data-Science-Project initialized!

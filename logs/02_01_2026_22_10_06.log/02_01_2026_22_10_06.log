@@ -1,7 +1,0 @@
-[ 2026-02-01 22:10:12,042 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
-[ 2026-02-01 22:10:12,050 ] 107 dagshub - INFO - Accessing as vedantukale29
-[ 2026-02-01 22:10:13,115 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/vedantukale29/Network-Security-Data-Science-Project "HTTP/1.1 200 OK"
-[ 2026-02-01 22:10:14,037 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
-[ 2026-02-01 22:10:14,041 ] 107 dagshub - INFO - Initialized MLflow to track repo "vedantukale29/Network-Security-Data-Science-Project"
-[ 2026-02-01 22:10:14,043 ] 107 dagshub - INFO - Repository vedantukale29/Network-Security-Data-Science-Project initialized!
-[ 2026-02-01 22:12:52,166 ] 1392 botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
