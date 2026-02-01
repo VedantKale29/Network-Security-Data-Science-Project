@@ -1,5 +1,6 @@
 import os
 import sys
+import boto3
 
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logging
@@ -34,6 +35,7 @@ class TrainingPipeline:
     def __init__(self):
         self.training_pipeline_config=TrainingPipelineConfig()
         self.s3_sync = S3Sync()
+        self.s3_client = boto3.client("s3")  #  add boto client
 
     def start_data_ingestion(self):
         try:
@@ -46,6 +48,22 @@ class TrainingPipeline:
         
         except Exception as e:
             raise NetworkSecurityException(e,sys)
+    
+    def update_latest_model_timestamp(self):
+        """
+        Writes final_model/latest.txt in S3 containing the current pipeline timestamp
+        """
+        try:
+            self.s3_client.put_object(
+                Bucket=TRAINING_BUCKET_NAME,
+                Key="final_model/latest.txt",
+                Body=self.training_pipeline_config.timestamp.encode("utf-8"),
+            )
+            logging.info(
+                f"Updated latest model timestamp in S3: {self.training_pipeline_config.timestamp}"
+            )
+        except Exception as e:
+            raise NetworkSecurityException(e, sys)
         
     def start_data_validation(self,data_ingestion_artifact:DataIngestionArtifact):
         try:
@@ -94,6 +112,7 @@ class TrainingPipeline:
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         
+        self.update_latest_model_timestamp()         # Update latest.txt in s3 bucket
     # local final model is going to s3 bucket 
         
     def sync_saved_model_dir_to_s3(self):

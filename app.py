@@ -21,7 +21,7 @@ from starlette.responses import RedirectResponse
 import pandas as pd
 
 from networksecurity.utils.main_utils.utils import load_object
-
+from networksecurity.constant.training_pipeline import TRAINING_BUCKET_NAME
 from networksecurity.utils.ml_utils.model.estimator import NetworkModel
 
 
@@ -29,7 +29,7 @@ client = pymongo.MongoClient(mongo_db_url, tlsCAFile=ca)
 
 from networksecurity.constant.training_pipeline import DATA_INGESTION_COLLECTION_NAME
 from networksecurity.constant.training_pipeline import DATA_INGESTION_DATABASE_NAME
-
+from networksecurity.cloud.model_resolver import S3ModelResolver
 database = client[DATA_INGESTION_DATABASE_NAME]
 collection = database[DATA_INGESTION_COLLECTION_NAME]
 
@@ -65,9 +65,20 @@ async def predict_route(request: Request,file: UploadFile = File(...)):
     try:
         df=pd.read_csv(file.file)
         #print(df)
-        preprocesor=load_object("final_model/preprocessor.pkl")
-        final_model=load_object("final_model/model.pkl")
-        network_model = NetworkModel(preprocessor=preprocesor,model=final_model)
+        resolver = S3ModelResolver(
+            bucket_name=TRAINING_BUCKET_NAME                 ## read from Cloud s3 bucket
+        )
+
+        timestamp = resolver.get_latest_timestamp()
+        preprocessor, model = resolver.load_model(timestamp)
+
+        network_model = NetworkModel(
+            preprocessor=preprocessor,
+            model=model
+        )
+        # preprocesor=load_object("final_model/preprocessor.pkl")
+        # final_model=load_object("final_model/model.pkl")
+        # network_model = NetworkModel(preprocessor=preprocesor,model=final_model)    ## Local read
         print(df.iloc[0])
         y_pred = network_model.predict(df)
         print(y_pred)
