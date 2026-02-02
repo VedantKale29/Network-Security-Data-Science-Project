@@ -83,7 +83,8 @@ jobs:
       
       - name: Pull latest images
         run: |
-         docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+          docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+
          
       - name: Stop and remove container if running
         run: |
@@ -92,11 +93,13 @@ jobs:
        
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 8080:8000 --ipc="host" --name=networksecurity \
-          -e AWS_ACCESS_KEY_ID='${{ secrets.AWS_ACCESS_KEY_ID }}' \
-          -e AWS_SECRET_ACCESS_KEY='${{ secrets.AWS_SECRET_ACCESS_KEY }}' \
-          -e AWS_REGION='${{ secrets.AWS_REGION }}' \
-          -e MONGODB_URL_KEY='${{ secrets.MONGODB_URL_KEY }}' \
-          -e DAGSHUB_USER='${{ secrets.DAGSHUB_USER }}' \
-          -e DAGSHUB_TOKEN='${{ secrets.DAGSHUB_TOKEN }}' \
-          ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+          docker run -d -p 8080:8000 --ipc="host" --name=networksecurity \
+            -e AWS_ACCESS_KEY_ID='${{ secrets.AWS_ACCESS_KEY_ID }}' \
+            -e AWS_SECRET_ACCESS_KEY='${{ secrets.AWS_SECRET_ACCESS_KEY }}' \
+            -e AWS_REGION='${{ secrets.AWS_REGION }}' \
+            -e MONGODB_URL_KEY='${{ secrets.MONGODB_URL_KEY }}' \
+            -e DAGSHUB_USER='${{ secrets.DAGSHUB_USER }}' \
+            -e DAGSHUB_TOKEN='${{ secrets.DAGSHUB_TOKEN }}' \
+            -e DAGSHUB_USERNAME='${{ secrets.DAGSHUB_USER }}' \
+            -e DAGSHUB_PASSWORD='${{ secrets.DAGSHUB_TOKEN }}' \
+            ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
